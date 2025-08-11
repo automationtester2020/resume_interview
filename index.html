@@ -1,65 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Interview App</title>
+    <meta charset="UTF-8">
+    <title>Webhook Form with File Upload</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff; /* Light blue background */
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        header {
-            background-color: #003366; /* Dark blue */
-            color: white;
-            padding: 20px;
-            font-size: 28px;
-            font-weight: bold;
+            margin: 40px;
         }
         form {
-            margin-top: 40px;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-            display: inline-block;
-        }
-        input[type="file"] {
-            border: 2px solid #003366;
-            padding: 10px;
-            margin: 10px;
+            max-width: 500px;
+            padding: 20px;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            background-color: #e6f0fa;
+            background: #f9f9f9;
         }
-        input[type="submit"] {
-            background-color: #003366;
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 12px 24px;
-            margin-top: 20px;
-            font-size: 18px;
             cursor: pointer;
-            border-radius: 8px;
-            transition: background 0.3s ease;
         }
-        input[type="submit"]:hover {
-            background-color: #00509e;
+        button:hover {
+            background-color: #45a049;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-<header>Interview App</header>
+<h2>Send Data & File to n8n Webhook</h2>
 
-<form action="https://YOUR_N8N_WEBHOOK_URL" method="POST" enctype="multipart/form-data">
-    <h2>Upload Resume and Job Description</h2>
-    <label>Upload Resume:</label><br>
-    <input type="file" name="resume" required><br>
-    <label>Upload Job Description:</label><br>
-    <input type="file" name="jobDescription" required><br>
-    <input type="submit" value="Submit">
+<form id="webhookForm" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <label for="file">Upload File (PDF/DOC):</label>
+    <input type="file" id="file" name="file" accept=".pdf,.doc,.docx" required>
+
+    <button type="submit">Send</button>
 </form>
+
+<div id="response"></div>
+
+<script>
+    document.getElementById("webhookForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch("https://your-n8n-domain.com/webhook/test-webhook", {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+            document.getElementById("response").style.display = "block";
+            document.getElementById("response").style.background = "#e0ffe0";
+            document.getElementById("response").textContent = "✅ Response: " + JSON.stringify(result);
+        } catch (error) {
+            document.getElementById("response").style.display = "block";
+            document.getElementById("response").style.background = "#ffe0e0";
+            document.getElementById("response").textContent = "❌ Error: " + error.message;
+        }
+    });
+</script>
 
 </body>
 </html>
