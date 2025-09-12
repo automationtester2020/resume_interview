@@ -392,9 +392,9 @@
     </div>
 
     <script>
-        const API_BASE = 'https://skateruai.app.n8n.cloud/webhook';
-        const UPLOAD_URL = `${API_BASE}/upload-resume`;
-        const CHAT_URL = `${API_BASE}/interview-chat`;
+        const API_BASE = 'http://localhost:5678/webhook';
+        const UPLOAD_URL = `${API_BASE}/resume_upload_team3`;
+        const CHAT_URL = `${API_BASE}/resume_interview_team3`;
         
         let interviewStarted = false;
         let timeRemaining = 900; // 15 minutes for technical interview
@@ -787,3 +787,4 @@ if (data.response && data.response.includes("✅ Thanks for completing")) {
     </script>
 </body>
 </html>
+
