@@ -393,8 +393,8 @@
 
     <script>
         const API_BASE = 'http://localhost:5678/webhook';
-        const UPLOAD_URL = `${API_BASE}/resume_upload_team3`;
-        const CHAT_URL = `${API_BASE}/resume_interview_team3`;
+        const UPLOAD_URL = `${API_BASE}/upload-resumeTeam3`;
+        const CHAT_URL = `${API_BASE}/interview-chatTeam3`;
         
         let interviewStarted = false;
         let timeRemaining = 900; // 15 minutes for technical interview
@@ -787,4 +787,5 @@ if (data.response && data.response.includes("✅ Thanks for completing")) {
     </script>
 </body>
 </html>
+
 
